@@ -19,7 +19,7 @@ public abstract class Media {
         return name;
     }
 
-    private void setName(String userInput) {
+    public void setName(String userInput) {
         name = userInput;
     }
 
@@ -27,7 +27,7 @@ public abstract class Media {
         return rating;
     }
 
-    private void setRating(int userInput) {
+    public void setRating(int userInput) {
         rating = userInput;
     }
 
@@ -35,7 +35,7 @@ public abstract class Media {
         return state;
     }
 
-    private void setState(String userInput){
+    public void setState(String userInput){
         state = userInput;
     }
 
@@ -43,7 +43,7 @@ public abstract class Media {
         return date;
     }
 
-    private void setDate(String userInput) {
+    public void setDate(String userInput) {
         date = userInput;
     }
 
@@ -51,7 +51,7 @@ public abstract class Media {
         return genre;
     }
 
-    private void setGenre(String userInput) {
+    public void setGenre(String userInput) {
         genre = userInput;
     }
 

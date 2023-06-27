@@ -1,3 +1,6 @@
+//import java.util.Scanner;
+import java.util.ArrayList;
+
 public class Movies extends Media{
     private String name;
     private String state;
@@ -17,8 +20,8 @@ public class Movies extends Media{
 
     //maybe write it directly into a csv??
 
-    public Movies(String userName) {
-        name = userName;
+    public Movies () {
+        name = "none";
         state = "none";
         date = "none";
         genre = "none";
@@ -26,15 +29,66 @@ public class Movies extends Media{
         length = -1;
     }
 
+    static ArrayList<Movies> movieList = new ArrayList<Movies>();
+
+    public static void showList() {
+        for (int i = 0; i < movieList.size(); i++) {
+            System.out.println(movieList.get(i).getName());
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String userInput) {
+        name = userInput;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int userInput) {
+        rating = userInput;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String userInput){
+        state = userInput;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String userInput) {
+        date = userInput;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String userInput) {
+        genre = userInput;
+    }
+
     public int getLength() {
         return length;
     }
 
-    private void setLength(int userInput) {
+    public void setLength(int userInput) {
         length = userInput;
     }
 
-    public addMovie() {
-        //make the user input the information here
-    }
+    /*public static void addMovie() {
+        Logic.printTitle("Add Movie");
+        System.out.println("What is the name of the movie?");
+        setName(Logic.getString());
+        System.out.println("The movie name")
+    }*/
 }
