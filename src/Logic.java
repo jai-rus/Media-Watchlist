@@ -3,8 +3,13 @@ import java.util.Scanner;
 public class Logic {
     static Scanner scnr = new Scanner(System.in);
 
-    public static String getString() {
+    //maybe if I need to get information for another class
+    /*public static String getString() {
         return scnr.nextLine();
+    }*/
+
+    public static int getInt() {
+        return scnr.nextInt();
     }
 
     //method that clears the console
@@ -44,10 +49,12 @@ public class Logic {
         printSeparator(30);
 
         String userChoice = choose();
+        clearConsole();
         switch (userChoice.toUpperCase()) {
             case "A":
-                System.out.println("Showing movies");
+                printTitle("Showing Movie List");
                 Movies.showList();
+                System.out.println("Back in logic");
                 waiting();
                 break;
             case "B":
@@ -62,6 +69,9 @@ public class Logic {
             case "E":
                 //System.out.println("Adding Media");
                 addMedia();
+                break;
+            default:
+                System.out.println("Invalid choice. Goodbye");
                 break;
         }
         showMenu();
