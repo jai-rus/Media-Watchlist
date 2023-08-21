@@ -1,13 +1,15 @@
 //import java.util.Scanner;
+import java.io.*;
 import java.util.ArrayList;
 
-public class Movies extends Media{
+public class Movies extends Media {
     private String name;
     private String state;
     private String date;
     private String genre;
     private int rating;
     private int length;
+    private static boolean loadMovies = true;
 
     public Movies(String userName, String userState, String userDate, String userGenre, int userRating, int userLength) {
         name = userName;
@@ -20,7 +22,7 @@ public class Movies extends Media{
 
     //maybe write it directly into a csv??
 
-    public Movies () {
+    public Movies() {
         name = "none";
         state = "none";
         date = "none";
@@ -30,27 +32,35 @@ public class Movies extends Media{
     }
 
     static ArrayList<Movies> movieList = new ArrayList<Movies>();
+    static ArrayList<String> movieNames = new ArrayList<String>();
 
     public static void showList() {
         int numMovies = 0;
+
+        if (loadMovies) {
+            listName();
+            loadMovies = false;
+        }
+
         System.out.println();
-        for (int i = 0; i < movieList.size(); i++) {
-            System.out.println(i + " - " + movieList.get(i).getName());
+        for (int i = 0; i < movieNames.size(); i++) {
+            System.out.println(i + " - " + movieNames.get(i));
             numMovies++;
         }
 
         System.out.println("\nIf you'd like to see more information for a movie, type the number next to the movie. Else type X");
 
         String userChoice = Logic.choose();
-        if(userChoice.toUpperCase().equals("X")) { //Checks if they exit the menu
+        if (userChoice.equalsIgnoreCase("X")) { //Checks if they exit the menu
             System.out.println("Goodbye");
         } else if (Helper.isNumber(userChoice)) { //Checks if its a number
             int userNum = Integer.parseInt(userChoice);
             if (userNum <= numMovies) { //Checks if its a valid option
-                showMovie(userNum);
+                //showMovie(userNum);
+                readMovie(userNum);
             }
         } else {
-            System.out.println("Goodbye");
+            Logic.clearConsole();
         }
     }
 
@@ -66,6 +76,69 @@ public class Movies extends Media{
         System.out.println("Length: " + movieList.get(userInt).getLength() + " minutes");
         Logic.printSeparator(30);
         Logic.waiting();
+    }
+    //writes the movie information into movie.csv using printwriter
+    public static void saveMovie(Movies movie) throws FileNotFoundException {
+        try {
+            //File csvFile = new File("movie.csv");
+            PrintWriter out = new PrintWriter(new FileWriter("movie.csv", true));
+
+            out.printf("%s, %s, %s, %s, %d, %d minutes\n", movie.getName(), movie.getState(), movie.getDate(), movie.getGenre(), movie.getRating(), movie.getLength());
+            out.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println(e);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //reads the movie information from movies.csv
+    //TODO: Work on showcasing the information along with a way to access more information from a specific movie
+    //TODO: maybe have all of the movies loaded into the object on start up?
+    public static void readMovie(int userChoice) {
+        String path = "movie.csv";
+        //String line = "";
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+
+            /*while((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                System.out.println(values[0]);
+            }*/
+
+            for (int i = 0; i <= userChoice; i++) {
+                //System.out.println(br.readLine());
+                String curLine = br.readLine();
+                //System.out.println(i);
+                if (i == userChoice)
+                    System.out.println(curLine);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //lists names of movies from the csv
+    public static void listName() {
+        String names[];
+        String curLine;
+        //ArrayList<String> movieNames = new ArrayList<String>();
+
+        try {
+            FileReader fr = new FileReader("movie.csv");
+            BufferedReader br = new BufferedReader(fr);
+
+            while ((curLine = br.readLine()) != null) {
+                names = curLine.split(",");
+                movieNames.add(names[0]);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getName() {
@@ -88,7 +161,7 @@ public class Movies extends Media{
         return state;
     }
 
-    public void setState(String userInput){
+    public void setState(String userInput) {
         state = userInput;
     }
 
@@ -115,11 +188,5 @@ public class Movies extends Media{
     public void setLength(int userInput) {
         length = userInput;
     }
-
-    /*public static void addMovie() {
-        Logic.printTitle("Add Movie");
-        System.out.println("What is the name of the movie?");
-        setName(Logic.getString());
-        System.out.println("The movie name")
-    }*/
 }
+
