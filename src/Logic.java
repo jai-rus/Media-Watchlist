@@ -82,6 +82,7 @@ public class Logic {
                 case "X":
                     System.out.println("Goodbye");
                     userChoice = "X";
+                    break;
                 default:
                     System.out.println("Invalid choice. Try again");
                     waiting();
@@ -138,6 +139,7 @@ public class Logic {
                     movie.setLength(mediaLength);
 
                     Movies.movieList.add(movie);
+                    //Movies.movieNames.add(mediaName);
                     Movies.saveMovie(movie);
                     break;
                 case "B":

@@ -37,14 +37,14 @@ public class Movies extends Media {
     public static void showList() {
         int numMovies = 0;
 
-        if (loadMovies) {
+        /*if (loadMovies) {
             listName();
             loadMovies = false;
-        }
+        }*/
 
         System.out.println();
-        for (int i = 0; i < movieNames.size(); i++) {
-            System.out.println(i + " - " + movieNames.get(i));
+        for (int i = 0; i < movieList.size(); i++) {
+            System.out.println(i + " - " + movieList.get(i).getName());
             numMovies++;
         }
 
@@ -56,8 +56,8 @@ public class Movies extends Media {
         } else if (Helper.isNumber(userChoice)) { //Checks if its a number
             int userNum = Integer.parseInt(userChoice);
             if (userNum <= numMovies) { //Checks if its a valid option
-                //showMovie(userNum);
-                readMovie(userNum);
+                showMovie(userNum);
+                //readMovie(userNum);
             }
         } else {
             Logic.clearConsole();
@@ -76,6 +76,7 @@ public class Movies extends Media {
         System.out.println("Length: " + movieList.get(userInt).getLength() + " minutes");
         Logic.printSeparator(30);
         Logic.waiting();
+        Logic.clearConsole();
     }
     //writes the movie information into movie.csv using printwriter
     public static void saveMovie(Movies movie) throws FileNotFoundException {
@@ -83,7 +84,7 @@ public class Movies extends Media {
             //File csvFile = new File("movie.csv");
             PrintWriter out = new PrintWriter(new FileWriter("movie.csv", true));
 
-            out.printf("%s, %s, %s, %s, %d, %d minutes\n", movie.getName(), movie.getState(), movie.getDate(), movie.getGenre(), movie.getRating(), movie.getLength());
+            out.printf("%s, %s, %s, %s, %d, %d\n", movie.getName(), movie.getState(), movie.getDate(), movie.getGenre(), movie.getRating(), movie.getLength());
             out.close();
         }
         catch (FileNotFoundException e) {
@@ -92,36 +93,39 @@ public class Movies extends Media {
             e.printStackTrace();
         }
     }
+
     //reads the movie information from movies.csv
-    //TODO: Work on showcasing the information along with a way to access more information from a specific movie
-    //TODO: maybe have all of the movies loaded into the object on start up?
-    public static void readMovie(int userChoice) {
+    /*public static void readMovie(int userChoice) { might be useless if i load everything from the beginning 2 hours later: it was
         String path = "movie.csv";
         //String line = "";
+        if (true) {
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(path));
 
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(path));
+                /*while((line = br.readLine()) != null) {
+                    String[] values = line.split(",");
+                    System.out.println(values[0]);
+                }
 
-            /*while((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                System.out.println(values[0]);
-            }*/
+                for (int i = 0; i <= userChoice; i++) {
+                    //System.out.println(br.readLine());
+                    String curLine = br.readLine();
+                    //System.out.println(i);
+                    if (i == userChoice)
+                        System.out.println(curLine);
 
-            for (int i = 0; i <= userChoice; i++) {
-                //System.out.println(br.readLine());
-                String curLine = br.readLine();
-                //System.out.println(i);
-                if (i == userChoice)
-                    System.out.println(curLine);
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            showMovie(userChoice);
         }
     }
     //lists names of movies from the csv
-    public static void listName() {
+    public static void listName() { //might be useless if I load everything from beginning
         String names[];
         String curLine;
         //ArrayList<String> movieNames = new ArrayList<String>();
@@ -139,7 +143,7 @@ public class Movies extends Media {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public String getName() {
         return name;
